@@ -4,8 +4,12 @@ import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
+import androidx.room.TypeConverters;
 
 import java.util.Date;
+
+import hn.uth.proyectofinal.ui.DateConverter;
+
 //creacion de las tablas para el DAO
 @Entity(tableName = "lugar_table")
 public class Lugar {
@@ -21,6 +25,7 @@ public class Lugar {
     private  String tipoLugar;
     @NonNull
     @ColumnInfo(name = "fecha")
+    @TypeConverters(DateConverter.class)
     private Date fecha;
     @NonNull
     @ColumnInfo(name = "longitud")
@@ -97,6 +102,24 @@ public class Lugar {
 
     public void setLatitud(@NonNull Double latitud) {
         this.latitud = latitud;
+    }
+
+    @NonNull
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(@NonNull String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    @NonNull
+    public Boolean getRetorno() {
+        return retorno;
+    }
+
+    public void setRetorno(@NonNull Boolean retorno) {
+        this.retorno = retorno;
     }
 }
 
