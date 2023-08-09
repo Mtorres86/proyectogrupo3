@@ -1,19 +1,36 @@
 package hn.uth.proyectofinal.ui.home;
 
+import android.app.Application;
+
+import androidx.annotation.NonNull;
+import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class HomeViewModel extends ViewModel {
+import java.util.List;
 
-    private final MutableLiveData<String> mText;
+import hn.uth.proyectofinal.Entities.Lugar;
+import hn.uth.proyectofinal.Repositories.LugarRepository;
 
-    public HomeViewModel() {
-        mText = new MutableLiveData<>();
-        mText.setValue("This is home fragment");
+public class HomeViewModel extends AndroidViewModel {
+    private LugarRepository repository;
+    private final LiveData<List<Lugar>> dataset;
+
+
+
+
+    public HomeViewModel(@NonNull Application app) {
+        super(app);
+        this.repository=new LugarRepository(app);
+        this.dataset=repository.getAllLugares();
+
+
     }
 
-    public LiveData<String> getText() {
-        return mText;
+    public LiveData<List<Lugar>> getAllLugares(){
+        return dataset;
     }
+
+
 }
