@@ -26,20 +26,21 @@ public class ContactoAdapter extends  RecyclerView.Adapter<ContactoAdapter.ViewH
 
     }
 
+    //creamos viewholder de nuestro adaptador
     @NonNull
     @Override
     public ContactoAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         ContactoItemBinding binding = ContactoItemBinding.inflate(LayoutInflater.from(parent.getContext()),parent,false
         );
-        return null;
+        return new ViewHolder(binding);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ContactoAdapter.ViewHolder holder, int position) {
-        Contacto contacto = dataset.get(position);
+        Contacto contacto = dataset.get(position);//aqui creamos un objeto y este nos enviara segun la posicion
         holder.binding.txtCNombre.setText(contacto.getNombre());
         holder.binding.txtCTelefono.setText(contacto.getTelefono());
-        holder.binding.txtCDireccion.setText(contacto.getEmail());
+        //holder.binding.txtCDireccion.setText(contacto.getEmail());
         holder.binding.txtCEmail.setText(contacto.getDireccion());
         holder.setOnClickListener(contacto,onItemClickContacto);
 
@@ -55,7 +56,7 @@ public class ContactoAdapter extends  RecyclerView.Adapter<ContactoAdapter.ViewH
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
-        ContactoItemBinding binding;
+ ContactoItemBinding binding;
 
 
         public ViewHolder(@NonNull ContactoItemBinding binding) {
@@ -64,7 +65,7 @@ public class ContactoAdapter extends  RecyclerView.Adapter<ContactoAdapter.ViewH
         }
 
         public void  setOnClickListener(Contacto nombreContacto, OnItemClickListener<Contacto> clickListener){
-            this.binding.txtCNombre.setOnClickListener(v -> clickListener.onItemClickt(nombreContacto));
+            this.binding.cardContacto.setOnClickListener(v -> clickListener.onItemClickt(nombreContacto));
 
         }
     }

@@ -9,6 +9,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.google.android.material.snackbar.Snackbar;
 
@@ -38,17 +39,22 @@ public class DashboardFragment extends Fragment implements OnItemClickListener<C
 
 
 
-        DashboardViewModel.getAllContactos().observe(getViewLifecycleOwner(), contactos -> {
+        dashboardViewModel.getAllContactos().observe(getViewLifecycleOwner(), contactos -> {
             if(contactos.isEmpty()){
                 Snackbar.make(binding.rvContactos,"No hay contactos creados", Snackbar.LENGTH_LONG).show();
             }else{
-                adaptador.setItems(<contactos>);
+                adaptador.setItems(contactos);
             }
         });
 
 
         setupRecyclerView();
         return root;
+    }
+    private void setupRecyclerView() {
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this.getContext());
+        binding.rvContactos.setLayoutManager(linearLayoutManager);
+        binding.rvContactos.setAdapter(adaptador);
     }
 
     @Override

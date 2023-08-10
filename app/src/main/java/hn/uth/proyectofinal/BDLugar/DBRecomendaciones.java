@@ -52,6 +52,11 @@ import hn.uth.proyectofinal.ui.DateConverter;
                                     ContactoDAO contactoDao = INSTANCE.contactoDAO();
                                     contactoDao.deleteAll();
                                     contactoDao.insert(new Contacto("Moises Torres","722435631","moises.torres@gmail.com","San Pedro Sula"));
+                                    contactoDao.insert(new Contacto("Alejandra Ayala","722435631","ale.torres@gmail.com","San Pedro Sula"));
+                                    contactoDao.insert(new Contacto("Moises Torres","722435631","moises.torres@gmail.com","San Pedro Sula"));
+                                    contactoDao.insert(new Contacto("Moises Torres","722435631","moises.torres@gmail.com","San Pedro Sula"));
+
+
 
 
                                 });

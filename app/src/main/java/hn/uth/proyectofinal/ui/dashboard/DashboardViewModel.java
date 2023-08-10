@@ -1,19 +1,30 @@
 package hn.uth.proyectofinal.ui.dashboard;
 
+import android.app.Application;
+
+import androidx.annotation.NonNull;
+import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class DashboardViewModel extends ViewModel {
+import java.util.List;
 
-    private final MutableLiveData<String> mText;
+import hn.uth.proyectofinal.Entities.Contacto;
+import hn.uth.proyectofinal.Repositories.ContactoRepository;
 
-    public DashboardViewModel() {
-        mText = new MutableLiveData<>();
-        mText.setValue("This is dashboard fragment");
+public class DashboardViewModel extends AndroidViewModel {
+
+
+private LiveData<List<Contacto>> dataset;
+private ContactoRepository repository;
+    public DashboardViewModel(@NonNull Application app) {
+        super(app);
+        repository = new ContactoRepository(app);
+        dataset=repository.getAllContactos();
+
     }
 
-    public LiveData<String> getText() {
-        return mText;
+    public LiveData<List<Contacto>> getAllContactos(){return dataset;
     }
 }
