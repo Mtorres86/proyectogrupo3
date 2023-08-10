@@ -10,9 +10,19 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import hn.uth.proyectofinal.databinding.FragmentDashboardBinding;
+import com.google.android.material.snackbar.Snackbar;
 
-public class DashboardFragment extends Fragment {
+import java.util.ArrayList;
+import java.util.List;
+
+import hn.uth.proyectofinal.Entities.Contacto;
+import hn.uth.proyectofinal.Entities.Lugar;
+import hn.uth.proyectofinal.OnItemClickListener;
+import hn.uth.proyectofinal.databinding.FragmentDashboardBinding;
+import hn.uth.proyectofinal.ui.home.LugarAdapter;
+
+public class DashboardFragment extends Fragment implements OnItemClickListener<Contacto> {
+    private ContactoAdapter adaptador;
 
     private FragmentDashboardBinding binding;
 
@@ -23,9 +33,21 @@ public class DashboardFragment extends Fragment {
 
         binding = FragmentDashboardBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
+        List<Contacto> contactoList = new ArrayList<>();
+        adaptador = new ContactoAdapter(contactoList,this);
 
-        final TextView textView = binding.textDashboard;
-        dashboardViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+
+
+        DashboardViewModel.getAllContactos().observe(getViewLifecycleOwner(), contactos -> {
+            if(contactos.isEmpty()){
+                Snackbar.make(binding.rvContactos,"No hay contactos creados", Snackbar.LENGTH_LONG).show();
+            }else{
+                adaptador.setItems(<contactos>);
+            }
+        });
+
+
+        setupRecyclerView();
         return root;
     }
 
@@ -33,5 +55,10 @@ public class DashboardFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
+    }
+
+    @Override
+    public void onItemClickt(Contacto data) {
+
     }
 }

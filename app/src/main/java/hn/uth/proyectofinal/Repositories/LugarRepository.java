@@ -16,7 +16,8 @@ public class LugarRepository {
 
 
     public LugarRepository(Application app ) {
-        this.lugarDao = lugarDao;
+        DBRecomendaciones db = DBRecomendaciones.getDataBase(app);
+        this.lugarDao = db.lugarDao();
         this.dataset = lugarDao.getLugar();
 
     }
