@@ -5,24 +5,20 @@ import androidx.room.ColumnInfo;
 import androidx.room.PrimaryKey;
 
 public class Contact {
-    private int idcontacto;
+
     private String nombre;
     private String telefono;
     private String direccion;
 
-    public int getIdcontacto() {
-        return idcontacto;
-    }
-    public Contact(int idcontacto, String nombre, String telefono, String direccion) {
-        this.idcontacto = idcontacto;
+
+    public Contact( String nombre, String telefono, String direccion) {
+
         this.nombre = nombre;
         this.telefono = telefono;
         this.direccion = direccion;
     }
 
-    public void setIdcontacto(int idcontacto) {
-        this.idcontacto = idcontacto;
-    }
+
 
     public String getNombre() {
         return nombre;

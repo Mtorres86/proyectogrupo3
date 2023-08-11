@@ -7,11 +7,13 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import hn.uth.proyectofinal.Entities.Lugar;
 import hn.uth.proyectofinal.OnItemClickListener;
 import hn.uth.proyectofinal.databinding.LugarItemBinding;
+
 
 public class LugarAdapter extends RecyclerView.Adapter<LugarAdapter.ViewHolder> {
     List<Lugar> dataset;
@@ -34,7 +36,8 @@ public class LugarAdapter extends RecyclerView.Adapter<LugarAdapter.ViewHolder> 
     public void onBindViewHolder(@NonNull LugarAdapter.ViewHolder holder, int position) {
         Lugar lugar = dataset.get(position);
         holder.binding.txtNombreLugar.setText(lugar.getLugar());
-        holder.binding.txtFechaLugar.setText(lugar.getFecha().toString());
+        String fechaFormat = new  SimpleDateFormat("dd-MM-yyyy").format(lugar.getFecha());
+        holder.binding.txtFechaLugar.setText(fechaFormat);
         holder.setOnClickListener(lugar,onItemClickLugar);
 
 
@@ -63,7 +66,7 @@ public class LugarAdapter extends RecyclerView.Adapter<LugarAdapter.ViewHolder> 
 
 
       public void  setOnClickListener(Lugar nombreLugar, OnItemClickListener<Lugar> clickListener){
-            this.binding.editarLugar.setOnClickListener(v -> clickListener.onItemClickt(nombreLugar));
+            this.binding.verLugar.setOnClickListener(v -> clickListener.onItemClickt(nombreLugar));
 
       }
 
