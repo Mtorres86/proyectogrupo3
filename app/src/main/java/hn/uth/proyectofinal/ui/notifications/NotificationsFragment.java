@@ -1,8 +1,10 @@
 package hn.uth.proyectofinal.ui.notifications;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -11,7 +13,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -26,12 +31,19 @@ import java.util.List;
 
 import hn.uth.proyectofinal.Contact;
 
+import hn.uth.proyectofinal.ContactosActivity;
+import hn.uth.proyectofinal.Entities.Contacto;
 import hn.uth.proyectofinal.OnItemClickListener;
 import hn.uth.proyectofinal.databinding.FragmentNotificationsBinding;
+import hn.uth.proyectofinal.ui.dashboard.DashboardViewModel;
 
 public class NotificationsFragment extends Fragment implements OnItemClickListener<Contact> {
     private static final int PERMISSION_REQUEST_READ_CONTACT = 400;
     private  ContactAdapter adaptador;
+    private ActivityResultLauncher<Intent> launcher;
+    DashboardViewModel  dashboardViewModel;
+
+
 
 
 
@@ -41,6 +53,7 @@ public class NotificationsFragment extends Fragment implements OnItemClickListen
                              ViewGroup container, Bundle savedInstanceState) {
         NotificationsViewModel notificationsViewModel =
                 new ViewModelProvider(this).get(NotificationsViewModel.class);
+        dashboardViewModel = new ViewModelProvider(this).get(DashboardViewModel.class);
 
         binding = FragmentNotificationsBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
@@ -51,6 +64,20 @@ public class NotificationsFragment extends Fragment implements OnItemClickListen
         binding.btnBuscar.setOnClickListener(v -> {
             adaptador.setItems(solicitarPermisoContactos());
         });
+
+        launcher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    //aqui recibimos del activity contactos los valores que hemos introducido en los textos.
+                    if (result.getResultCode() == Activity.RESULT_OK) {
+                        Intent recibido = result.getData();
+                        Contact  contact = (Contact) recibido.getSerializableExtra("contact");
+                        dashboardViewModel.insert(new Contacto(contact.getNombre(),contact.getTelefono(),contact.getEmail(),contact.getDireccion()));
+                    } else {
+                        Toast.makeText(this.getContext(),"Operación cancelada",Toast.LENGTH_LONG).show();
+                    }
+                }
+        );
 
 
         return root;
@@ -140,8 +167,14 @@ public class NotificationsFragment extends Fragment implements OnItemClickListen
         binding = null;
     }
 
+
+    ///aqui llamamos al activyt conytactps al dar clic a un contactp de nuestro telefono, para luegoi agregarlo en el ROOM
     @Override
     public void onItemClickt(Contact data) {
+        Intent intent = new Intent(requireContext(), ContactosActivity.class);
+        intent.putExtra("action","update");
+        intent.putExtra("contact",data);
+        launcher.launch(intent);
 
     }
 

@@ -40,7 +40,7 @@ public class ContactAdapter extends  RecyclerView.Adapter<ContactAdapter.ViewHol
         holder.binding.txtNombre.setText(contact.getNombre());
         holder.binding.txtTelefono.setText(contact.getTelefono());
         //holder.binding.txtCDireccion.setText(contact.getEmail());
-        holder.binding.txtEmail.setText(contact.getDireccion());
+        holder.binding.txtEmail.setText(contact.getEmail());
         holder.setOnClickListener(contact,onItemClickContact);
 
     }

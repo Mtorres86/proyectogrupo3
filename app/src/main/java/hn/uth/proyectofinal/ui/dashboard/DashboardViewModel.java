@@ -27,4 +27,9 @@ private ContactoRepository repository;
 
     public LiveData<List<Contacto>> getAllContactos(){return dataset;
     }
+
+    public void insert(Contacto contacto){
+        repository.insertContacto(contacto);
+
+    }
 }
